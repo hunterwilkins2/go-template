@@ -7,9 +7,9 @@ func (app *Application) serverError(w http.ResponseWriter, err error) {
 	w.WriteHeader(http.StatusInternalServerError)
 }
 
-func (app *Application) notFound(w http.ResponseWriter) {
+func (app *Application) notFound(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
-	err := app.templates.Render(w, "not-found.page.html", nil)
+	err := app.templates.Render(w, r, "not-found.page.html", nil)
 	if err != nil {
 		app.serverError(w, err)
 		return
