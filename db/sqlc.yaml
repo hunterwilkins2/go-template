@@ -1,7 +1,9 @@
-version: 1
-packages:
-  - path: "../internal/data"
-    name: "data"
-    engine: "mysql"
+version: 2
+sql:
+  - engine: "sqlite"
     schema: "schema.sql"
     queries: "query.sql"
+    gen:
+      go:
+        package: "data"
+        out: "../internal/data"

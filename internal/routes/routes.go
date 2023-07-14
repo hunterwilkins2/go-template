@@ -12,10 +12,11 @@ import (
 )
 
 type Application struct {
-	config    *config.Config
-	logger    *zap.Logger
-	queries   *data.Queries
-	templates *templates.HTMLTemplate
+	config         *config.Config
+	logger         *zap.Logger
+	sessionManager *scs.SessionManager
+	queries        *data.Queries
+	templates      *templates.HTMLTemplate
 }
 
 func New(config *config.Config, logger *zap.Logger, db *sql.DB) *Application {
@@ -24,11 +25,20 @@ func New(config *config.Config, logger *zap.Logger, db *sql.DB) *Application {
 		logger.Fatal("could not parse templates", zap.String("error", err.Error()))
 	}
 
+	sessionManager := scs.New()
+	sessionManager.Store = sqlite3store.New(db)
+	sessionManager.Lifetime = 24 * time.Hour
+	sessionManager.Cookie.HttpOnly = true
+	sessionManager.Cookie.Path = "/"
+	sessionManager.Cookie.SameSite = http.SameSiteStrictMode
+	sessionManager.Cookie.Secure = true
+
 	return &Application{
-		config:    config,
-		logger:    logger,
-		queries:   data.New(db),
-		templates: templates,
+		config:         config,
+		logger:         logger,
+		sessionManager: sessionManager,
+		queries:        data.New(db),
+		templates:      templates,
 	}
 }
 

@@ -4,9 +4,18 @@
 
 package data
 
-import ()
+import (
+	"database/sql"
+)
 
-type User struct {
+type Author struct {
 	ID   int64
 	Name string
+	Bio  sql.NullString
+}
+
+type Session struct {
+	Token  string
+	Data   []byte
+	Expiry float64
 }

@@ -24,6 +24,7 @@ build: tailwind/build
 ## generate-sql: uses sqlc to generate sql models and queries
 .PHONY: generate-sql
 generate-sql:
+	sqlite3 db/${BINARY_NAME}.db ".read db/schema.sql"
 	sqlc -f db/sqlc.yaml generate
 
 # Utilites
