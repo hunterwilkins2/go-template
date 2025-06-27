@@ -7,7 +7,7 @@ on:
 
   workflow_dispatch:
 
-permissons:
+permissions:
   contents: read
   pages: write
   id-token: write
@@ -76,7 +76,7 @@ jobs:
           path: ./docs/public
 
   deploy:
-    environemnt:
+    environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
