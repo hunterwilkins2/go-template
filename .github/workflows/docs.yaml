@@ -26,6 +26,7 @@ defaults:
 
 jobs:
   build:
+    name: Build Hugo Artifact
     runs-on: ubuntu-latest
     env:
       HUGO_VERSION: 0.147.8
@@ -78,6 +79,7 @@ jobs:
           path: ./docs/public
 
   deploy:
+    name: Deploy Hugo Docs to Github Pages
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
