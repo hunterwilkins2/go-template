@@ -1,5 +1,22 @@
 .DS_Store
 
+### Terraform ###
+# Local .terraform directories
+devops/terraform/.terraform
+
+# Variable files
+devops/terraform/*.auto.tfvars
+
+# Override files
+devops/terraform/*.tfoverride
+
+# Environemtn specific files
+devops/terraform/*.envrc
+
+# CLI configuration files
+devops/terraform/.terraformrc
+devops/terraform/terraform.rc
+
 ### Hugo ###
 # Generated files by hugo
 docs/public
