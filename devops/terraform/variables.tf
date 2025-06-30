@@ -72,5 +72,5 @@ variable "cloudflare_zone" {
 variable "github_pages_url" {
   description = "Github Pages URL"
   type        = string
-  default     = "hunterwilkins.github.io"
+  default     = "hunterwilkins2.github.io"
 }
