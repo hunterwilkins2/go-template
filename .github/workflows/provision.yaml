@@ -4,11 +4,13 @@ on:
   push:
     branches:
       - master
+    paths:
+      - devops/terraform/**
   pull_request:
     branches:
       - "*"
-  paths:
-    - devops/terraform/**
+    paths:
+      - devops/terraform/**
 
   permissions:
     contents: read
