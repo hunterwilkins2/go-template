@@ -1,11 +1,11 @@
-name: Provision infra 
+name: Provision infra
 
-on: 
+on:
   push:
-    branches: 
+    branches:
     - master
   pull_request:
-  paths: 
+  paths:
     - devops/terraform/**
 
   permissions:
@@ -43,5 +43,3 @@ on:
       - name: Terraform Apply
         if: github.ref == 'refs/head/"master"' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
-        
-
