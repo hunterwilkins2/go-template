@@ -48,9 +48,6 @@ resource "cloudflare_dns_record" "a_record" {
   type    = "A"
   comment = "GCP VPC A record"
   content = google_compute_network.vpc_network.gateway_ipv4
-  settings = {
-    ipv4_only = true
-  }
   proxied = true
   ttl     = 1 # automatic
 }
@@ -61,9 +58,6 @@ resource "cloudflare_dns_record" "www_record" {
   type    = "CNAME"
   comment = "GCP VPC network www subdomain"
   content = var.domain_name
-  settings = {
-    ipv4_only = true
-  }
   proxied = true
   ttl     = 1 # automatic
 }
@@ -76,9 +70,6 @@ resource "cloudflare_dns_record" "docs_a_record" {
   type    = "A"
   comment = "Github Pages"
   content = each.value
-  settings = {
-    ipv4_only = true
-  }
   proxied = true
   ttl     = 1 # automatic
 }
@@ -89,9 +80,6 @@ resource "cloudflare_dns_record" "docs_www_record" {
   type    = "CNAME"
   comment = "Github Pages www subdomain"
   content = join(".", [var.docs_subdomain, var.domain_name])
-  settings = {
-    ipv4_only = true
-  }
   proxied = true
   ttl     = 1 # automatic
 }
