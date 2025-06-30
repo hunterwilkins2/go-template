@@ -1,46 +1,52 @@
-name: "Provision infra" 
+name: Provision infra
 
-on: 
+on:
   push:
-    branches: ["master"]
+    branches:
+      - master
+    paths:
+      - devops/terraform/**
   pull_request:
-  paths: 
-    - devops/terraform/**
+    branches:
+      - "*"
+    paths:
+      - devops/terraform/**
 
-  permissions:
-    contents: read
+  workflow_dispatch:
 
-  jobs:
-    terraform:
-      name: "Terraform"
-      env: 
-        CLOUDFLARE_API_USER_SERVICE_KEY: ${{ secrets.CLOUDFLARE_API_SERVICE_KEY }}
-        GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-        TF_VAR_SSH_PUB: ${{ secrets.TF_VAR_SSH_PUB }}
-      runs-on: ubuntu-latest
-      environment: production
-      defaults:
-        run:
-          shell: bash
-      steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+permissions:
+  contents: read
 
-      - name: Setup Terraform
-        uses: hasicorp/setup-terraform@v1
+jobs:
+  terraform:
+    name: "Terraform"
+    env: 
+      CLOUDFLARE_API_USER_SERVICE_KEY: ${{ secrets.CLOUDFLARE_API_SERVICE_KEY }}
+      GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+      TF_VAR_SSH_PUB: ${{ secrets.TF_VAR_SSH_PUB }}
+    runs-on: ubuntu-latest
+    environment: production
+    defaults:
+      run:
+        shell: bash
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
 
-      - name: Terraform Init
-        run: terraform -chdir=devops/terraform init 
-      
-      - name: Terraform Format 
-        run: terraform -chdir=devops/terraform fmt -check
+    - name: Setup Terraform
+      uses: hasicorp/setup-terraform@v1
 
-      - name: Terraform Plan
-        run: terraform -chdir=devops/terraform plan -input=false
+    - name: Terraform Init
+      run: terraform -chdir=devops/terraform init 
+    
+    - name: Terraform Format 
+      run: terraform -chdir=devops/terraform fmt -check
 
-        # On push to "master"
-      - name: Terraform Apply
-        if: github.ref == 'refs/head/"master"' && github.event_name == 'push'
-        run: terraform apply -auto-approve -input=false
-        
+    - name: Terraform Plan
+      run: terraform -chdir=devops/terraform plan -input=false
+
+    # On push to "master"
+    - name: Terraform Apply
+      if: github.ref == 'refs/head/"master"' && github.event_name == 'push'
+      run: terraform apply -auto-approve -input=false
 
