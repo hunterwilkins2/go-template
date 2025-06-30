@@ -1,3 +1,13 @@
+## terraform/validate: Validates main.tf and variables.tf 
+.PHONY: terraform/validate
+terraform/validate:
+	terraform -chdir=devops/terraform validate 
+
+## terraform/plan: Shows changes terraforms plans to apply
+.PHONY: terraform/plan
+terraform/plan:
+	terraform -chdir=devops/terraform plan 
+
 ## docs/new page=PAGE_NAME.md: Creates a new docs page in the docs/content/docs directory
 .PHONY: docs/new
 docs/new:
