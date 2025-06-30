@@ -48,5 +48,5 @@ jobs:
     # On push to "master"
     - name: Terraform Apply
       if: ${{ github.ref == 'refs/heads/master' }}
-      run: terraform apply -auto-approve -input=false
+      run: terraform -chdir=devops/terraform apply -auto-approve -input=false
 
