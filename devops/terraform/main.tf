@@ -63,6 +63,7 @@ resource "cloudflare_dns_record" "www_record" {
 }
 
 resource "cloudflare_dns_record" "docs_a_record" {
+  zone_id = var.cloudflare_zone
   name    = join(".", [var.docs_subdomain, var.domain_name])
   type    = "CNAME"
   comment = "Github Pages"
