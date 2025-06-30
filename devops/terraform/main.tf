@@ -1,20 +1,20 @@
 terraform {
   required_providers {
     cloudflare = {
-      source = "cloudflare/cloudflare"
+      source  = "cloudflare/cloudflare"
       version = "~> 5"
     }
   }
 }
 
 provider "google" {
-	project = var.gcp_project_name
-	region = var.gcp_region
-	zone = var.gcp_zone
+  project = var.gcp_project_name
+  region  = var.gcp_region
+  zone    = var.gcp_zone
 }
 
 resource "google_compute_instance" "vm_instance" {
-  name = var.vm_name
+  name         = var.vm_name
   machine_type = var.vm_type
 
   boot_disk {
@@ -35,7 +35,7 @@ resource "google_compute_instance" "vm_instance" {
 }
 
 resource "google_compute_network" "vpc_network" {
-  name = var.vpc_network_name
+  name                    = var.vpc_network_name
   auto_create_subnetworks = "true"
 }
 
@@ -44,56 +44,56 @@ provider "cloudflare" {
 
 resource "cloudflare_dns_record" "a_record" {
   zone_id = var.cloudflare_zone
-  name = var.domain_name 
-  type = "A"
+  name    = var.domain_name
+  type    = "A"
   comment = "GCP VPC A record"
   content = google_compute_network.vpc_network.gateway_ipv4
-  settings =  {
+  settings = {
     ipv4_only = true
   }
   proxied = true
-  ttl = 1 # automatic
+  ttl     = 1 # automatic
 }
 
 resource "cloudflare_dns_record" "www_record" {
   zone_id = var.cloudflare_zone
-  name = "www"
-  type = "CNAME"
+  name    = "www"
+  type    = "CNAME"
   comment = "GCP VPC network www subdomain"
   content = var.domain_name
-  settings =  {
+  settings = {
     ipv4_only = true
   }
   proxied = true
-  ttl = 1 # automatic
+  ttl     = 1 # automatic
 }
 
 resource "cloudflare_dns_record" "docs_a_record" {
   for_each = toset(var.docs_a_records)
 
   zone_id = var.cloudflare_zone
-  name = join(".", [var.docs_subdomain, var.domain_name])
-  type = "A"
+  name    = join(".", [var.docs_subdomain, var.domain_name])
+  type    = "A"
   comment = "Github Pages"
   content = each.value
   settings = {
     ipv4_only = true
   }
   proxied = true
-  ttl = 1 # automatic
+  ttl     = 1 # automatic
 }
 
 resource "cloudflare_dns_record" "docs_www_record" {
   zone_id = var.cloudflare_zone
-  name = "www"
-  type = "CNAME"
+  name    = "www"
+  type    = "CNAME"
   comment = "Github Pages www subdomain"
   content = join(".", [var.docs_subdomain, var.domain_name])
-  settings =  {
+  settings = {
     ipv4_only = true
   }
   proxied = true
-  ttl = 1 # automatic
+  ttl     = 1 # automatic
 }
 
 
