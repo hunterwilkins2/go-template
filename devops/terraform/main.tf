@@ -74,14 +74,3 @@ resource "cloudflare_dns_record" "docs_a_record" {
   ttl     = 1 # automatic
 }
 
-resource "cloudflare_dns_record" "docs_www_record" {
-  zone_id = var.cloudflare_zone
-  name    = "www"
-  type    = "CNAME"
-  comment = "Github Pages www subdomain"
-  content = join(".", [var.docs_subdomain, var.domain_name])
-  proxied = true
-  ttl     = 1 # automatic
-}
-
-
