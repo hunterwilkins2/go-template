@@ -3,9 +3,10 @@ name: Provision infra
 on:
   push:
     branches:
-    - master
+      - master
   pull_request:
-    - *
+    branches:
+      - "*"
   paths:
     - devops/terraform/**
 
