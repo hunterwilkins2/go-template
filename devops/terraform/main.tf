@@ -63,13 +63,10 @@ resource "cloudflare_dns_record" "www_record" {
 }
 
 resource "cloudflare_dns_record" "docs_a_record" {
-  for_each = toset(var.docs_a_records)
-
-  zone_id = var.cloudflare_zone
   name    = join(".", [var.docs_subdomain, var.domain_name])
-  type    = "A"
+  type    = "CNAME"
   comment = "Github Pages"
-  content = each.value
+  content = var.github_pages_url
   proxied = true
   ttl     = 1 # automatic
 }

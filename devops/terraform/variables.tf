@@ -69,14 +69,8 @@ variable "cloudflare_zone" {
   default     = "31c9a5dc2c98865baddb71c4539aefb8"
 }
 
-variable "docs_a_records" {
-  description = "Github Pages A records"
-  type        = list(string)
-  default = [
-    "185.199.108.153",
-    "185.199.109.153",
-    "185.199.110.153",
-    "185.199.111.153"
-  ]
+variable "github_pages_url" {
+  description = "Github Pages URL"
+  type        = string
+  default     = "hunterwilkins.github.io"
 }
-
