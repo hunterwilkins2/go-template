@@ -10,6 +10,7 @@ on:
     branches:
       - "*"
     paths:
+      - .github/workflows/provision.yaml
       - devops/terraform/**
 
   workflow_dispatch:
