@@ -82,7 +82,7 @@ jobs:
     name: Deploy Hugo Docs to Github Pages
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: https://docs.hivestack.dev
     runs-on: ubuntu-latest
     needs: build
     steps:
