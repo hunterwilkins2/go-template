@@ -5,6 +5,7 @@ on:
     branches:
       - master
     paths:
+      - .github/workflows/provision.yaml
       - devops/terraform/**
   pull_request:
     branches:
